@@ -19,9 +19,9 @@ namespace TrashCollector.Models
         public string State { get; set; }
         public string ZipCode { get; set; }
         public double Balance { get; set; }
-        public string PickUpDay { get; set; }
-        public DateTime ExtraPickUpDate { get; set; }
-        public DateTime SuspendStartDate { get; set; }
+        public string PickUpDay { get; set; }   //could use DayOfWeek
+        public DateTime ExtraPickUpDate { get; set; } 
+        public DateTime SuspendStartDate { get; set; } //Could use TimeSpan?
         public DateTime SuspendEndDate { get; set; }
 
         [ForeignKey("IdentityUser")]
