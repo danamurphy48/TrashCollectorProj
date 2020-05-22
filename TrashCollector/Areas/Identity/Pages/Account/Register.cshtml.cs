@@ -95,6 +95,17 @@ namespace TrashCollector.Areas.Identity.Pages.Account
                     }
                     _logger.LogInformation("User created a new account with password.");
 
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    if (Input.Role == "Customer")
+                    {
+                        return RedirectToAction("Create", "Customers");
+                    }
+                    else if(Input.Role == "Employee")
+                    {
+                        return RedirectToAction("Create", "Employees");
+                    }
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
