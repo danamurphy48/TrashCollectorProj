@@ -14,8 +14,8 @@
     <thead>
         <tr>
             @*<th>
-                @Html.DisplayNameFor(model => model.CustomerId)
-            </th>*@
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
             </th>
@@ -49,9 +49,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.SuspendEndDate)
             </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.IsSuspended)
+            </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.IdentityUserId)
-            </th>*@
+            @Html.DisplayNameFor(model => model.IdentityUserId)
+        </th>*@
             <th></th>
         </tr>
     </thead>
@@ -59,8 +62,8 @@
 @foreach (var item in Model) {
         <tr>
             @*<td>
-                @Html.DisplayFor(modelItem => item.CustomerId)
-            </td>*@
+            @Html.DisplayFor(modelItem => item.CustomerId)
+        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -94,9 +97,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SuspendEndDate)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsSuspended)
+            </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.IdentityUserId)
-            </td>*@
+            @Html.DisplayFor(modelItem => item.IdentityUserId)
+        </td>*@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) @*|*@

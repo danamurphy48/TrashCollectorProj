@@ -29,18 +29,21 @@ namespace TrashCollector.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var employee = _context.Employees.Where(e => e.IdentityUserId == userId).FirstOrDefault();
 
-
+            
             
             var customer = _context.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == todaysDay || c.ExtraPickUpDate == DateTime.Today).ToList();
-            //var customer = _context.Customers.Include(c => c.PickUpDay).ToList();
-            //if (StringToDateTimeConverter.Equals(DateTime.UtcNow) = _context.Customers.PickUpDay)
-                //{ 
-                //    if (employee.ZipCode == customer.ZipCode)
-                //    {
+            bool isSuspended = false;
+            //var suspension = _context.Customers.Where(c => c.SuspendStartDate <= DateTime.Today && c.SuspendEndDate > DateTime.Today);
+            ////if (!isSuspended)
+            ////{
+            ////    customer
+            ////}
+            ////var suspended = _context.Customers.Where()
+            ////if (_context.Customers.Where(c => c.SuspendStartDate >= DateTime.Today && c.SuspendEndDate < DateTime.Today)
+            ////{
 
-                //    }
-                //}
-                return View(customer);
+            ////}
+            return View(customer);
         }
 
         // GET: EmployeesController/Details/5
@@ -58,7 +61,7 @@ namespace TrashCollector.Controllers
         // POST: EmployeesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(/*IFormCollection collection*/ Employee employee)
+        public ActionResult Create(Employee employee)
         {
             try
             {

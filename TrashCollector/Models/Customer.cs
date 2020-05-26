@@ -21,7 +21,6 @@ namespace TrashCollector.Models
 
         [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
-
         public string City { get; set; }
         public string State { get; set; }
 
@@ -40,6 +39,9 @@ namespace TrashCollector.Models
 
         [Display(Name = "Suspend Pick-Up End Date")]
         public DateTime? SuspendEndDate { get; set; }
+
+        [Display(Name = "Confirm Suspension")]
+        public bool IsSuspended { get; set; }
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
