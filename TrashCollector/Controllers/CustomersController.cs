@@ -38,10 +38,12 @@ namespace TrashCollector.Controllers
             {
                 return NotFound();
             }
-
-            var customer = await _context.Customers
-                .Include(c => c.IdentityUser)
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            //var customer = await _context.Customers
+            //    .Include(c => c.IdentityUser)
+            //    .FirstOrDefaultAsync(m => m.CustomerId == id);
             if (customer == null)
             {
                 return NotFound();
@@ -85,6 +87,8 @@ namespace TrashCollector.Controllers
             }
 
             var customer = await _context.Customers.FindAsync(id);
+            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
             if (customer == null)
             {
                 return NotFound();
@@ -100,6 +104,7 @@ namespace TrashCollector.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CustomerId,FirstName,LastName,StreetAddress,City,State,ZipCode,PickUpDay,ExtraPickUpDate,SuspendStartDate,SuspendEndDate")] Customer customer)
         {
+
             if (id != customer.CustomerId)
             {
                 return NotFound();
