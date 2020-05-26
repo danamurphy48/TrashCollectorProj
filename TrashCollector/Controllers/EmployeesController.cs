@@ -1,18 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using TrashCollector.Data;
+using TrashCollector.Models;
 
 namespace TrashCollector.Controllers
 {
+    [Authorize(Roles ="Employee")]
     public class EmployeesController : Controller
     {
-        // GET: EmployeesController
-        public ActionResult Index()
+        private readonly ApplicationDbContext _context;
+        public EmployeesController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        // GET: EmployeesController
+        public ActionResult Index(int ZipCode)
+        {
+            var todaysDay = DateTime.Today.DayOfWeek.ToString();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var employee = _context.Employees.Where(e => e.IdentityUserId == userId).FirstOrDefault();
+
+
+            
+            var customer = _context.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == todaysDay || c.ExtraPickUpDate == DateTime.Today).ToList();
+            //var customer = _context.Customers.Include(c => c.PickUpDay).ToList();
+            //if (StringToDateTimeConverter.Equals(DateTime.UtcNow) = _context.Customers.PickUpDay)
+                //{ 
+                //    if (employee.ZipCode == customer.ZipCode)
+                //    {
+
+                //    }
+                //}
+                return View(customer);
         }
 
         // GET: EmployeesController/Details/5
@@ -30,10 +58,18 @@ namespace TrashCollector.Controllers
         // POST: EmployeesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(/*IFormCollection collection*/ Employee employee)
         {
             try
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                employee.IdentityUserId = userId;
+
+                _context.Employees.Add(employee);
+                _context.SaveChanges();
+                //employee.IdentityUserId = userId;
+                //_context.Add(employee);
+                //await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -63,25 +99,25 @@ namespace TrashCollector.Controllers
             }
         }
 
-        // GET: EmployeesController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //// GET: EmployeesController/Delete/5
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: EmployeesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: EmployeesController/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
