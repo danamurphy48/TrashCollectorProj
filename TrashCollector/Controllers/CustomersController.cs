@@ -63,7 +63,7 @@ namespace TrashCollector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerId,FirstName,LastName,StreetAddress,City,State,ZipCode,PickUpDay,ExtraPickUpDate,SuspendStartDate,SuspendEndDate")] Customer customer)
+        public async Task<IActionResult> Create([Bind("CustomerId,FirstName,LastName,StreetAddress,City,State,ZipCode,PickUpDay,ExtraPickUpDate,SuspendStartDate,SuspendEndDate,IsSuspended")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace TrashCollector.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
+            //ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
             return View(customer);
         }
 
@@ -102,7 +102,7 @@ namespace TrashCollector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,FirstName,LastName,StreetAddress,City,State,ZipCode,PickUpDay,ExtraPickUpDate,SuspendStartDate,SuspendEndDate")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,FirstName,LastName,StreetAddress,City,State,ZipCode,PickUpDay,ExtraPickUpDate,SuspendStartDate,SuspendEndDate,IsSuspended,IdentityUserId,Balance")] Customer customer)
         {
 
             if (id != customer.CustomerId)
@@ -130,7 +130,7 @@ namespace TrashCollector.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
+            //ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
             return View(customer);
         }
 

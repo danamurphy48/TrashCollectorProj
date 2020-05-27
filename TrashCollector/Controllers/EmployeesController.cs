@@ -30,26 +30,27 @@ namespace TrashCollector.Controllers
             var employee = _context.Employees.Where(e => e.IdentityUserId == userId).FirstOrDefault();
 
             
-            
-            var customer = _context.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == todaysDay || c.ExtraPickUpDate == DateTime.Today).ToList();
-            bool isSuspended = false;
-            //var suspension = _context.Customers.Where(c => c.SuspendStartDate <= DateTime.Today && c.SuspendEndDate > DateTime.Today);
-            ////if (!isSuspended)
-            ////{
-            ////    customer
-            ////}
-            ////var suspended = _context.Customers.Where()
-            ////if (_context.Customers.Where(c => c.SuspendStartDate >= DateTime.Today && c.SuspendEndDate < DateTime.Today)
-            ////{
-
-            ////}
+            var customer = _context.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == todaysDay && c.IsSuspended == false || c.ExtraPickUpDate == DateTime.Today).ToList();
             return View(customer);
         }
 
-        // GET: EmployeesController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Filter()
         {
             return View();
+        }
+
+        // GET: EmployeesController/Details/5
+        public ActionResult FuturePickUps(string PickUpDay)
+        {
+            var todaysDay = DateTime.Today.DayOfWeek.ToString();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var employee = _context.Employees.Where(e => e.IdentityUserId == userId).FirstOrDefault();
+
+
+
+            var customer = _context.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == PickUpDay && c.IsSuspended == false).ToList();
+            return View(customer);
+
         }
 
         // GET: EmployeesController/Create
@@ -82,7 +83,7 @@ namespace TrashCollector.Controllers
         }
 
         // GET: EmployeesController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult ConfirmPickUp(int id)
         {
             return View();
         }
@@ -90,7 +91,7 @@ namespace TrashCollector.Controllers
         // POST: EmployeesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult ConfirmPickUp(int id, IFormCollection collection)
         {
             try
             {

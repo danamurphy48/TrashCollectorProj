@@ -1,21 +1,21 @@
 ﻿@model IEnumerable<TrashCollector.Models.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "FuturePickUps";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Today's Pick-Ups</h1>
+<h1>Future Pick-Ups</h1>
 
 <p>
-    <a asp-action="Filter">Filter By Day</a>
+    <a asp-action="Index">Back To Today's Pick-Ups</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             @*<th>
-            @Html.DisplayNameFor(model => model.CustomerId)
-        </th>*@
+                @Html.DisplayNameFor(model => model.CustomerId)
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
             </th>
@@ -53,8 +53,8 @@
                 @Html.DisplayNameFor(model => model.IsSuspended)
             </th>
             @*<th>
-            @Html.DisplayNameFor(model => model.IdentityUserId)
-        </th>*@
+                @Html.DisplayNameFor(model => model.IdentityUserId)
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -62,8 +62,8 @@
 @foreach (var item in Model) {
         <tr>
             @*<td>
-            @Html.DisplayFor(modelItem => item.CustomerId)
-        </td>*@
+                @Html.DisplayFor(modelItem => item.CustomerId)
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -101,14 +101,18 @@
                 @Html.DisplayFor(modelItem => item.IsSuspended)
             </td>
             @*<td>
-            @Html.DisplayFor(modelItem => item.IdentityUserId)
-        </td>*@
-            <td>
-                @Html.ActionLink("Confirm Pick-Up", "ConfirmPickUp", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Future Pick-Ups", "FuturePickUps", new { /* id=item.PrimaryKey */ }) @*|*@
-                @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-            </td>
+                @Html.DisplayFor(modelItem => item.IdentityUserId)
+            </td>*@
+            @*<td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>*@
         </tr>
 }
     </tbody>
 </table>
+<div>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.CustomerId }) |*@
+    <a asp-action="Index">Back to List</a>
+</div>
