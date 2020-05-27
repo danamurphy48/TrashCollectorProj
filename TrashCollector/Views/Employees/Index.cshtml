@@ -104,8 +104,8 @@
             @Html.DisplayFor(modelItem => item.IdentityUserId)
         </td>*@
             <td>
-                @Html.ActionLink("Confirm Pick-Up", "ConfirmPickUp", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Future Pick-Ups", "FuturePickUps", new { /* id=item.PrimaryKey */ }) @*|*@
+                @Html.ActionLink("Confirm Pick-Up", "ConfirmPickUp", new {  id=item.CustomerId  })
+                @*@Html.ActionLink("Future Pick-Ups", "FuturePickUps", new { /* id=item.PrimaryKey */ })*@ @*|*@
                 @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>

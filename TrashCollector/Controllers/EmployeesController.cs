@@ -40,6 +40,8 @@ namespace TrashCollector.Controllers
         }
 
         // GET: EmployeesController/Details/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult FuturePickUps(string PickUpDay)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -85,19 +87,39 @@ namespace TrashCollector.Controllers
             }
         }
 
-        // GET: EmployeesController/Edit/5
-        public ActionResult ConfirmPickUp(int id)
-        {
-            return View();
-        }
-
-        // POST: EmployeesController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ConfirmPickUp(int id, IFormCollection collection)
+        
+        
+        public ActionResult ConfirmPickUp(int id, bool TrashCollected) //put a bind in here? pass in Customer customer?
         {
             try
-            {
+            {                
+                double trashCollectionFee;
+                trashCollectionFee = 25;
+
+                //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //var employee = _context.Employees.Where(e => e.IdentityUserId == userId).FirstOrDefault();
+                var customer = _context.Customers.Where(c => c.CustomerId == id).FirstOrDefault();
+
+                customer.Balance += trashCollectionFee;
+                _context.SaveChanges();
+
+                //Customer customer1 = new Customer();
+                ////var customer = _context.Customers.Where(c => c.Balance == customer1.Balance).FirstOrDefault();
+
+                ////var customer = _context.Customers.Where(c => c.Balance += trashCollectionFee);
+                ////customer.Balance += trashCollectionFee;
+                ////_context.SaveChanges();    
+
+                ////_context.Customers.Balance = customer.Balance;
+                ////bool TrashCollected = false;
+                //if (TrashCollected == true)
+                //{
+                //    //var customer = _context.Customers.Sum(c => c.Balance += trashCollectionFee);
+                //    _context.SaveChanges();
+                //    return View(customer);
+                //}
+
+
                 return RedirectToAction(nameof(Index));
             }
             catch
