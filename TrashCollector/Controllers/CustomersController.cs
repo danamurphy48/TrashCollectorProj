@@ -23,11 +23,8 @@ namespace TrashCollector.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            //customer shouldn't be able to see other customers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = _context.Customers.Where(c => c.IdentityUserId ==
-            userId).SingleOrDefault();
-            //var applicationDbContext = _context.Customers.Include(c => c.IdentityUser);
+            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
             return View(customer);
         }
 
@@ -39,11 +36,8 @@ namespace TrashCollector.Controllers
                 return NotFound();
             }
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = _context.Customers.Where(c => c.IdentityUserId ==
-            userId).SingleOrDefault();
-            //var customer = await _context.Customers
-            //    .Include(c => c.IdentityUser)
-            //    .FirstOrDefaultAsync(m => m.CustomerId == id);
+            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+
             if (customer == null)
             {
                 return NotFound();
@@ -87,13 +81,12 @@ namespace TrashCollector.Controllers
             }
 
             var customer = await _context.Customers.FindAsync(id);
-            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+
             if (customer == null)
             {
                 return NotFound();
             }
-            //ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
+
             return View(customer);
         }
 
@@ -130,7 +123,6 @@ namespace TrashCollector.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
             return View(customer);
         }
 
