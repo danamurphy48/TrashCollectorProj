@@ -42,14 +42,17 @@ namespace TrashCollector.Controllers
         // GET: EmployeesController/Details/5
         public ActionResult FuturePickUps(string PickUpDay)
         {
-            var todaysDay = DateTime.Today.DayOfWeek.ToString();
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var employee = _context.Employees.Where(e => e.IdentityUserId == userId).FirstOrDefault();
 
 
 
-            var customer = _context.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == PickUpDay && c.IsSuspended == false).ToList();
-            return View(customer);
+            var customers = _context.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == PickUpDay && c.IsSuspended == false).ToList();
+            //var customersExtraPickup = _context.Customers.Where(c => c.ExtraPickUpDate == PickUpDay).ToList();
+            //List<Customer> customersExtraPickup = null;
+
+            //customers.AddRange(customersExtraPickup);
+            return View(customers);
 
         }
 
