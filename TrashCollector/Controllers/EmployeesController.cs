@@ -23,7 +23,7 @@ namespace TrashCollector.Controllers
         }
 
         // GET: EmployeesController
-        public ActionResult Index(int ZipCode)
+        public ActionResult Index()
         {
             var todaysDay = DateTime.Today.DayOfWeek.ToString();
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

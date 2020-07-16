@@ -4,12 +4,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Filter By Day of Week</h1>
+<h1>Filter by Day of Week</h1>
 
 <form asp-action="FuturePickUps" >
     <div class="form-group">
         <label class="control-label">Day of Week:</label>
-        <input class="form-control" name="PickUpDay" />
+        @*<input class="form-control" name="PickUpDay" />*@
+        <select class="dropdown" name="PickUpDay" >
+            <option value="Sunday">Sunday</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+        </select>
     </div>
     <div class="form-group">
         <input type="submit" value="Filter" class="btn btn-primary" />
